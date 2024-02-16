@@ -43,7 +43,7 @@ function HomePage() {
 
           {countries.map((country) => {
         return (
-          <p className="list-group-item list-group-item-action" key={country._id}>{country.name.common}</p>
+          <a className="list-group-item list-group-item-action" key={country._id}>{country.name.common}</a>
         )
       })}
         </div>
