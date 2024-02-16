@@ -17,7 +17,7 @@ function HomePage() {
         setCountries(response.data); // add the list of countries to the state
         setFetching(false); // remove the spin animation
       });
-  }, []); // useEffect will only be triggered one time since the array is empty
+  }, []); // useEffect will only be triggered once since brackets are empty
 
     return (
         <div className="container" style={{maxHeight: "90vh overflow scroll"}}>
