@@ -1,21 +1,56 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
+
 function CountryDetails() {
+  const [foundCountry, setFoundCountry] = useState(null);
+
+  const { countryId } = useParams();
+  console.log('The countryId is:', countryId);
+
+  const countriesApi = `https://ih-countries-api.herokuapp.com/countries/${countryId}`; // countries data from API stored in a variable
+
+
+  // Method .find() returns the first found matching element,
+  // or `null` if no matching element is found.
+  useEffect(() => {
+    console.log("useEffect - Initial render (Mounting)");
+    console.log("Fetching data...");
+    axios.get(countriesApi) // this will fetch the countries data from the api
+      .then((response) => {
+        console.log("API response data", response.data)
+        setFoundCountry(response.data); // add the list of countries to the state
+      });
+  }, [countriesApi]); // useEffect will run after the initial render and each time that the URL parameter with the countryId changes.
+
+  if (foundCountry === null || undefined) {
+    console.log("State variable is currently null or undefined. Data is still loading.")
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
+  else {
     return(
         <div className="container">
         <p style={{fontSize: "24px", fontWeight: "bold"}}>Country Details</p>
 
-        <h1>France</h1>
+        <img src={`https://flagpedia.net/data/flags/icon/72x54/${foundCountry.alpha2Code.toLowerCase()}.png`} />
+        <br/>
+        <h1>{foundCountry.name.common}</h1>
 
         <table className="table">
           <thead></thead>
           <tbody>
             <tr>
               <td style={{width: "30%"}}>Capital</td>
-              <td>Paris</td>
+              <td>{foundCountry.capital}</td>
             </tr>
             <tr>
               <td>Area</td>
               <td>
-                551695 km
+              {foundCountry.area} km
                 <sup>2</sup>
               </td>
             </tr>
@@ -23,14 +58,11 @@ function CountryDetails() {
               <td>Borders</td>
               <td>
                 <ul>
-                  <li><a href="/AND">Andorra</a></li>
-                  <li><a href="/BEL">Belgium</a></li>
-                  <li><a href="/DEU">Germany</a></li>
-                  <li><a href="/ITA">Italy</a></li>
-                  <li><a href="/LUX">Luxembourg</a></li>
-                  <li><a href="/MCO">Monaco</a></li>
-                  <li><a href="/ESP">Spain</a></li>
-                  <li><a href="/CHE">Switzerland</a></li>
+                  {foundCountry.borders.map((borderCountryAlpha3Code, index) => {
+                    return (
+                      <li key={index}><Link to={`/${borderCountryAlpha3Code}`}>{borderCountryAlpha3Code}</Link></li>
+                    )
+                  })}
                 </ul>
               </td>
             </tr>
@@ -38,6 +70,7 @@ function CountryDetails() {
         </table>
       </div>
     );
+  }
 }
 
 export default CountryDetails;
