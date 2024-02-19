@@ -58,9 +58,9 @@ function CountryDetails() {
               <td>Borders</td>
               <td>
                 <ul>
-                  {foundCountry.borders.map((borderCountryAlpha3Code, index) => {
+                  {foundCountry.borders.map((borderCountryAlpha3Code) => {
                     return (
-                      <li key={index}><Link to={`/${borderCountryAlpha3Code}`}>{borderCountryAlpha3Code}</Link></li>
+                      <li key={borderCountryAlpha3Code}><Link to={`/${borderCountryAlpha3Code}`}>{borderCountryAlpha3Code}</Link></li>
                     )
                   })}
                 </ul>
