@@ -8,20 +8,15 @@ function CountryDetails() {
   const { countryId } = useParams();
   console.log('The countryId is:', countryId);
 
-  const countriesApi = `https://ih-countries-api.herokuapp.com/countries/${countryId}`; // countries data from API stored in a variable
-
-
-  // Method .find() returns the first found matching element,
-  // or `null` if no matching element is found.
   useEffect(() => {
     console.log("useEffect - Initial render (Mounting)");
     console.log("Fetching data...");
-    axios.get(countriesApi) // this will fetch the countries data from the api
+    axios.get(`https://ih-countries-api.herokuapp.com/countries/${countryId}`)
       .then((response) => {
         console.log("API response data", response.data)
         setFoundCountry(response.data); // add the list of countries to the state
       });
-  }, [countriesApi]); // useEffect will run after the initial render and each time that the URL parameter with the countryId changes.
+  }, [countryId]); // useEffect will run after the initial render and each time that the URL parameter with the countryId changes.
 
   if (foundCountry === null || undefined) {
     console.log("State variable is currently null or undefined. Data is still loading.")
