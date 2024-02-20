@@ -52,7 +52,7 @@ function CountryDetails() {
             <tr>
               <td>Borders</td>
               <td>
-                <ul>
+                <ul style={{listStyle: "none"}}>
                   {foundCountry.borders.map((borderCountryAlpha3Code) => {
                     return (
                       <li key={borderCountryAlpha3Code}><Link to={`/${borderCountryAlpha3Code}`}>{borderCountryAlpha3Code}</Link></li>
