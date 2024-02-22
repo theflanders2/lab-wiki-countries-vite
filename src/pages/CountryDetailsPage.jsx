@@ -14,7 +14,7 @@ function CountryDetails() {
     axios.get(`https://ih-countries-api.herokuapp.com/countries/${countryId}`)
       .then((response) => {
         console.log("API response data", response.data)
-        setFoundCountry(response.data); // add the list of countries to the state
+        setFoundCountry(response.data); // add country's details to the state
       });
   }, [countryId]); // useEffect will run after the initial render and each time that the URL parameter with the countryId changes.
 
